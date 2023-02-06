@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+
+idir=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_uv1000
+
+
+#ua1000.fp.CXFPS025.HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist.199609.3hr.nc
+
+
+expid="HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist"
+
+outdir=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_uv1000_MJJAS
+
+
+yearlist=$(seq 1995 2005)
+monlist=$(printf "%02d " $(seq 1 4) $(seq 10 12))
+
+
+echo $monlist
+mkdir -p $outdir
+
+for year in $yearlist; do
+   	for month in $monlist;do
+             	echo "Remove ua1000 -- ${year}/${month}"
+     		rm ${idir}/va1000.fp.CXFPS025.${expid}.${year}${month}.3hr.nc   # ${outdir}/${var}.his.CXFPS025.${expid}.${year}${month}.3hr_MJJAS.nc
+   	done
+done
+

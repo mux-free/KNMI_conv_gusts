@@ -1,0 +1,45 @@
+#!/usr/bin/bash
+
+# Note we use selindex instead of sellonlatbox, becuase the td2m field does not have any lon/lat dimensions!!
+
+#---------------------------------------------------------------------------------------------------------------
+# Start SCRIPT
+#--------------
+#fields=("ugs vgs psl td2m")
+fields=("ugs vgs")
+#------------------------------------------------------------------------------------------------------------------------
+# MAIN LOOP
+#-----------
+for field in $fields
+do
+	files=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_${field}/*1995*1hr.nc
+	odir=/net/pc200057/nobackup_1/users/frei/CPMs/fields_lonlatbox/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_${field}_lonlatbox
+	#mkdir -p $odir
+
+	for file in $files
+	do
+		cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file" "$odir/$(basename $file .nc)_lonlatbox.nc" || exit 1
+		#cdo -f nc4 -z zip9 -sellonlatbox,3,13,48,55 "$file" "$odir/$(basename $file .nc)_lonlatbox.nc" || exit 1
+	done
+done
+
+echo "Variable ${field} is done"
+#-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

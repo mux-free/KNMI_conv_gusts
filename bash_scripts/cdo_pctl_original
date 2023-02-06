@@ -1,0 +1,117 @@
+#!/bin/sh
+
+# cdo percentiles over time need both min and max
+# for large input files putting it in one line is cumbersome
+# so compute min and max first
+# cdo --help timpctl
+# set -ex # if you want to get to see some output...
+
+
+mycdo="cdo -s -L -f nc4 -z zip9"
+expid="myexp001"
+
+export CDO_PCTL_NBINS=101 # defaults to 101, but needs to be increased to 1001 if we want to 99.9 etc...
+
+pctllist="95 99" # target percentiles to be computed...
+
+# optionally get subselection, e.g. months and lon-latbox...
+#cdoselection="-selmon,5,6,7,8,9"
+#cdoselection="-sellonlatbox,-20,30,30,70 -selmon,5,6,7,8,9"
+
+
+# where is the input data...
+# Input is the daily max data on which lonlatbox is already applied (hourly data!)
+datadir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS  
+
+
+infiles=$(find $datadir -name "*.nc")
+
+time='hist'
+file=HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_${time}_wsgsmax_merged_MJJAS.nc
+
+# scratch work directory
+wrk=${datadir}/pctl/wrk
+
+out=${datadir}/pctl/output
+cleanup=true
+
+
+# --------------
+echo "start script"
+# create work and output directory
+mkdir -p $wrk
+mkdir -p $out
+
+# Copy merged file from filedirectory to wrk directory
+cp ${datadir}/${file} $wrk/mergedinput.nc
+
+# cdo mergetime
+allmergefile=$wrk/mergedinput.nc
+
+
+if [ -f $allmergefile ];then
+	echo Merged files found
+fi
+
+if [ ! -f $allmergefile ];then
+  echo "merging files"
+  echo $allmergefile
+  $mycdo -mergetime $infiles $allmergefile
+  echo "files merged"
+fi
+
+
+
+# select domain and relevant months...
+#if [ "X${cdoselection}" = "X" ];then
+  #mergefile=$allmergefile
+  #echo "X${cdoselection} = X  taken"
+#else
+  #mergefile=$wrk/$(basename $allmergefile .nc)_selection.nc
+  #if [ ! -f $mergefile ];then
+   #$mycdo $cdoselection $allmergefile $mergefile
+  # echo "if [ ! -f $mergefile ];then ----- taken"
+ # fi
+#fi
+
+# ---------
+if [ ! -f $mergefile ];then
+  echo "Something went wrong. $mergefile absent"
+  exit 1
+fi
+# ---------
+# min
+minfile=$wrk/minfile.nc
+if [ ! -f $minfile ];then
+  echo "calculating time min"
+  $mycdo -timmin $mergefile $minfile
+fi
+# max
+maxfile=$wrk/maxfile.nc
+if [ ! -f $maxfile ];then
+  echo "calculating time max"
+  $mycdo -timmax $mergefile $maxfile
+fi
+
+
+# actual percentile computation
+for pctl in $pctllist;do
+	echo 'Test: do i even get here? ----- pctl calculations start'
+  pctlfile=$out/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_${time}_wsgsmax_MJJAS_P${pctl}.nc
+  echo 'pctlfile = $pctlfile'
+  if [ ! -f $pctlfile ];then
+    echo "pctl $pctl"
+    $mycdo -timpctl,$pctl $mergefile $minfile $maxfile $pctlfile
+  fi
+done
+# optionally clean wrk 
+if [ $cleanup = true ];then
+  echo "clean up"
+  rm -fr $wrk
+fi
+
+
+echo "done"
+exit
+
+

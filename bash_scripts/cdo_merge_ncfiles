@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+
+files=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax
+odir=/net/pc200057/nobackup_1/users/frei/CPMs/overview
+
+mkdir -p $odir
+
+cdo -f nc4 -z zip9 -mergetime ${files}/wsgsmax.his.CXFPS025.HCLIM38h1*.nc ${odir}/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_merged.nc || exit 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

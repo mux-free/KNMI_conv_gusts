@@ -1,0 +1,56 @@
+#!/usr/bin/bash
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Present & small domain
+#------------------------
+# Directory containing the merged MJJAS file
+idir="/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS"
+# Name of file
+file=HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_merged_MJJAS.nc
+file2=HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_merged_MJJAS.nc
+
+
+# Location where average file should be saved
+#odir=$idir/stats/field_average
+#mkdir -p $odir
+odir2=$idir/stats/field_max
+mkdir -p $odir2
+
+#### Use the cdo command to compute the time average for every gridpoint
+#cdo -f nc4 -z zip9 -timmean ${idir}/${file} $odir/$(basename $file .nc)_avg.nc || exit 1
+
+#------------------------------------------------------------------------------------------------------------------------------
+#### Calculate max-fields for hsit and future time set
+cdo -f nc4 -z zip9 -timmax ${idir}/${file} $odir2/$(basename $file .nc)_max.nc || exit 1
+cdo -f nc4 -z zip9 -timmax ${idir}/${file2} $odir2/$(basename $file2 .nc)_max.nc || exit 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+#!/bin/bash
+indir=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_uv1000
+outdir=/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_uv1000/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_uv1000_dailymax
+
+mkdir -p $outdir
+
+# Loop through all the files in the input directory
+for file in $indir/*.nc; do
+  # Extract the daily maximum values from the hourly output
+  mon=$(cdo -s -L -showmon -seltimestep,1 $file)
+  mon=$(echo $mon | awk '{sub(" ","",$0);print $0}')
+  echo "$file $mon"
+  
+  cdo -f nc4 -z zip9 -L -selmon,$mon -daymax $file $outdir/$(basename $file .nc)_dailymax.nc
+done
+

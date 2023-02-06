@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+
+
+idir='/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_dailymax'
+idir="/net/pc200057/nobackup_1/users/frei/CPM_future/HCLIM38h1_CXFPS_fRACMOfECEARTH_r04_rcp85_wsgsmax_dailymax"
+
+
+expid="HCLIM38h1_CXFPS_fRACMOfECEARTH_r04_rcp85"
+#expid="HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist"
+
+#outdir='/net/pc200057/nobackup_1/users/frei/CPMs/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_dailymax_MJJAS'
+outdir='/net/pc200057/nobackup_1/users/frei/CPM_future/HCLIM38h1_CXFPS_fRACMOfECEARTH_r04_rcp85_wsgsmax_dailymax_MJJAS'
+
+
+yearlist=$(seq 2089 2099)
+#yearlist=$(seq 1995 2005)
+monlist=$(printf "%02d " $(seq 5 9))
+
+
+#varlist=("pr ugs vgs wsgsmax tas")
+varlist=("wsgsmax")
+
+
+echo $yearlist
+
+# Big Loop
+for var in $varlist;do
+	#odir="${outdir}/${var}_lonlatbox_selmonth"
+	#echo $odir
+	mkdir -p $outdir
+	
+	for year in $yearlist; do
+		for month in $monlist;do
+			echo "Copy $var -- ${year}/${month}"
+			cp ${idir}/${var}.his.CXFPS025.${expid}.${year}${month}.1hr_daily_max.nc ${outdir}/${var}.his.CXFPS025.${expid}.${year}${month}.dailymax_MJJAS.nc	
+		done
+	done
+done
+
+
+#wsgsmax.his.CXFPS025.HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist.199806.1hr_dailymax.nc
+#wsgsmax.his.CXFPS025.HCLIM38h1_CXFPS_fRACMOfECEARTH_r04_rcp85.209301.1hr_daily_max.nc

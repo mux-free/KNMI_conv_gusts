@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+
+file=/usr/people/vries/NOBACKUP1/DATA/CORDEX-FPS/HCLIM38h1_CXFPS1999_fRACMO/sftof.clim.CXFPS025.HCLIM38h1_CXFPS1999_fRACMO.fx.nc
+odir=/net/pc200057/nobackup_1/users/frei/CPMs/fields_lonlatbox
+
+
+
+
+cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file" "$odir/sftof.clim.CXFPS025.HCLIM38h1_CXFPS1999_fRACMO.fx_lonlatbox.nc"

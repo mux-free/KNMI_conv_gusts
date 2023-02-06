@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+#--------------------------------------------------
+# Specify input_dir of all files and outputdir of concatenated file
+#------------------------------------------------------------------
+
+yearlist=$(seq 1995 2005)
+
+
+for year in $yearlist;do
+	
+files=/net/pc200057/nobackup_1/users/frei/track_cluster/output_tracking_sdomain/celltrack/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist/$year*
+odir=/net/pc200057/nobackup_1/users/frei/track_cluster/output_tracking_sdomain/celltrack/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist/yearly_merged/${year}
+
+mkdir -p $odir
+
+
+cdo -f nc4 -z zip9 -mergetime ${files}/cells.nc ${odir}/cells.nc || exit 1
+cat ${files}/cell_shape.txt >> ${odir}/cell_shape.txt 
+cat ${files}/cell_stats.txt >> ${odir}/cell_stats.txt
+cat ${files}/tracks_all_summary.txt >> ${odir}/tracks_all_summary.txt
+
+done
+
+
+
+
+
+
+
+
+

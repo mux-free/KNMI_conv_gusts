@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+# Get files that should be subselected
+idir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/overview_future
+odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview
+
+mycdo="cdo -s -L -f nc4 -z zip9"
+cdoselection="-selmon,5,6,7,8,9"
+
+filename=HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_merged_fut.nc
+
+mergefile=$idir/$filename 
+
+echo File: ${mergefile} 
+
+mergefile_MJJAS=$odir/$(basename $mergefile .nc)_MJJAS.nc
+
+echo Outfile: ${mergefile_MJJAS}
+
+echo Start selcting MJJAS
+$mycdo $cdoselection $mergefile $mergefile_MJJAS
+ 	
+

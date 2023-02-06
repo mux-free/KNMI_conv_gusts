@@ -1,0 +1,48 @@
+#!/usr/bin/bash
+
+#===================================
+# Case 1
+#==================================
+#file=/usr/people/vries/NOBACKUP1/DATA/CORDEX-FPS/HCLIM38h1_CXFPS1999_fRACMO/orog.clim.CXFPS025.HCLIM38h1_CXFPS1999_fRACMO.fx.nc
+#odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats_lonlatbox
+
+#cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file" "$odir/orog.clim.CXFPS025.HCLIM38h1_CXFPS1999_fRACMO.nc"
+
+#===================================
+# Case 2 max-hist
+#==================================
+#file=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_max/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_merged_MJJAS_max.nc
+#odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats_lonlatbox/field_max
+
+#cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_merged_MJJAS_lonlatbox_max.nc"
+
+#===================================
+# Case 3 max-fut
+#==================================
+#file=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_max/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_merged_MJJAS_max.nc
+#odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats_lonlatbox/field_max
+
+#cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_merged_MJJAS_lonlatbox_max.nc"
+
+
+#===================================
+# Case 4 pctl 95, 99
+#==================================
+file1=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_pctl/pctl/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_MJJAS_P95.nc
+file2=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_pctl/pctl/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_MJJAS_P99.nc
+odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats_lonlatbox/field_pctl/pctl
+
+cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file1" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_MJJAS_lonlatbox_P95.nc"
+cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file2" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_hist_wsgsmax_MJJAS_lonlatbox_P99.nc"
+
+
+#===================================
+# Case 5 pctl_fut 95, 99
+#==================================
+file1=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_pctl/pctl_fut/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_MJJAS_P95.nc
+file2=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats/field_pctl/pctl_fut/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_MJJAS_P99.nc
+odir=/net/pc200057/nobackup_1/users/frei/wsgs_overview/MJJAS/stats_lonlatbox/field_pctl/pctl_fut
+
+cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file1" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_MJJAS_lonlatbox_P95.nc"
+cdo -f nc4 -z zip9 -selindexbox,328,642,390,734 "$file2" "$odir/HCLIM38h1_CXFPS_fRACMOfECEARTH_r14_fut_wsgsmax_MJJAS_lonlatbox_P99.nc"
+
