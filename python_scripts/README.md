@@ -2,7 +2,7 @@ Here I try to list the python files used for the project in chronological order 
 
 -----------------------------------------------------------
 _general functions used repeatedly_
------------------------------------------------------------
+
 __data_processing.py:__
   - Contains several functions that facilitate data reading or data processing. Important functions are:
     - read_df_cell: which reads in the df_cells and changes the dtype of the time columns to datetime64
